@@ -1,0 +1,17 @@
+{
+  "name": "tax_calc_api",
+  "version": "1.0.0",
+  "description": "Federal income tax api to calculate federal tax rate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Shane Swezey",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.4"
+  }
+}
