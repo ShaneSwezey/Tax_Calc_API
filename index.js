@@ -6,6 +6,9 @@ const app = express();
 
 // Routes
 const singleRoutes = require('./routes/single');
+const marriedJRoutes = require('./routes/marriedj');
+const marriedSRoutes = require('./routes/marrieds');
+const houseHoldRoutes = require('./routes/household');
 
 // User Name/Password file
 const accountContent = fs.readFileSync("nodemon.json");
@@ -37,6 +40,9 @@ app.use((req, res, next) => {
 
 // Routes which should handle requests
 app.use('/single', singleRoutes);
+app.use('/marriedj', marriedJRoutes);
+app.use('/marrieds', marriedSRoutes);
+app.use('/household', houseHoldRoutes);
 
 // Handles errors
 app.use((req, res, next) => {

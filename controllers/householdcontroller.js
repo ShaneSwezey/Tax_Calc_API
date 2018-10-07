@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const SingleFiler = require('../models/singlefiler')
+const HouseHoldFiler = require('../models/headhold');
 
 // Http: Get
-// Returns json object containing tax brackets for married seperate filing by every year
-exports.single_get_all = (req, res, next) => {
-    SingleFiler.find()
+// Returns json object containing tax brackets for head of household seperate filing by every year
+exports.household_get_all = (req, res, next) => {
+    HouseHoldFiler.find()
     .select("year rates _id")
     .exec()
     .then(docs => {
@@ -18,7 +18,7 @@ exports.single_get_all = (req, res, next) => {
                     _id: doc._id,
                     request: {
                         type: "GET",
-                        url: "http://localhost:3000/products/" + doc._id
+                        url: "http://localhost:3000/marriedj/" + doc._id
                     }
                 };
             })
@@ -34,9 +34,9 @@ exports.single_get_all = (req, res, next) => {
 };
 
 // Http: Get
-// Returns json object containing tax brackets for single filing by year
-exports.single_get_year = (req, res, next) => {
-    SingleFiler.find( {year: req.params.year} )
+// Returns json object containing tax brackets for head of household seperate filing by year
+exports.household_get_year = (req, res, next) => {
+    HouseHoldFiler.find( {year: req.params.year} )
     .select("year rates _id")
     .exec()
     .then(fileYear => {
@@ -46,7 +46,7 @@ exports.single_get_year = (req, res, next) => {
                 fileYear: fileYear,
                 request: {
                     type: "GET",
-                    url: "http://localhost:3001/single"
+                    url: "http://localhost:3001/marriedj"
                 }
             });
         } else {
