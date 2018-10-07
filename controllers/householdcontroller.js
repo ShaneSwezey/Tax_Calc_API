@@ -18,7 +18,7 @@ exports.household_get_all = (req, res, next) => {
                     _id: doc._id,
                     request: {
                         type: "GET",
-                        url: "http://localhost:3000/marriedj/" + doc._id
+                        url: "http://localhost:3000/household/" + doc._id
                     }
                 };
             })
@@ -46,7 +46,7 @@ exports.household_get_year = (req, res, next) => {
                 fileYear: fileYear,
                 request: {
                     type: "GET",
-                    url: "http://localhost:3001/marriedj"
+                    url: "http://localhost:3001/household"
                 }
             });
         } else {
