@@ -4,11 +4,14 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const app = express();
 
+// Routes
+const singleRoutes = require('./routes/single');
+
+// User Name/Password file
 const accountContent = fs.readFileSync("nodemon.json");
 const jsonContent = JSON.parse(accountContent);
 
-console.log(jsonContent);
-
+// Connect to MongoDb Atlas
 mongoose.connect(`mongodb+srv://${jsonContent.env.MONGO_ATLAS_USR}:${jsonContent.env.MONGO_ATLAS_PW}@tax-hudgz.mongodb.net/test?retryWrites=true` ,
 {
     useNewUrlParser: true,
@@ -17,9 +20,6 @@ mongoose.connect(`mongodb+srv://${jsonContent.env.MONGO_ATLAS_USR}:${jsonContent
 .then(console.log("Connected to Database"))
 .catch(err => console.error('Could not connect to MongoDB...', err));
 mongoose.Promise = global.Promise;
-
-const singleRoutes = require('./routes/single');
-
 
 app.use(morgan('dev'));
 app.use((req, res, next) => {
