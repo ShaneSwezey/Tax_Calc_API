@@ -5,16 +5,19 @@ const Years = require('../models/years');
 // Http: Get
 // Returns all the years available for tax bracket calculations
 exports.get_all_years = (req, res, next) => {
-    Years
-    .find()
-    .select(" years numberOfYears")
+    Years.find()
+    .select(" numberOfYears years _id ")
     .exec()
     .then(doc => {
-        const response = {
-            numberOfYears: doc.numberOfYears,
-            years: doc.years
-        };
-        res.status(200).json(response);
+        console.log("From database", doc);
+        if (doc) {
+            res.status(200).json({
+                availableYears : doc
+            });
+        } else {
+            res.status(404).json({ message: "Not Found"})
+        }
+        
     })
     .catch(err => {
         console.log(err);
