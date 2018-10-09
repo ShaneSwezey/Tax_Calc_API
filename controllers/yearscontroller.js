@@ -11,13 +11,10 @@ exports.get_all_years = (req, res, next) => {
     .then(doc => {
         console.log("From database", doc);
         if (doc) {
-            res.status(200).json({
-                availableYears : doc
-            });
+            res.status(200).json(doc);
         } else {
             res.status(404).json({ message: "Not Found"})
         }
-        
     })
     .catch(err => {
         console.log(err);
