@@ -21,7 +21,6 @@ mongoose.connect(`mongodb+srv://${jsonContent.env.MONGO_ATLAS_USR}:${jsonContent
     useNewUrlParser: true,
     dbName: 'Federal_Tax'
 })
-.then(console.log("Connected to Database"))
 .catch(err => console.error('Could not connect to MongoDB...', err));
 mongoose.Promise = global.Promise;
 
