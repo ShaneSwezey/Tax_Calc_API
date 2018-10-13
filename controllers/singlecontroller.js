@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const taxCalculator = require('../calculations/Tax');
 
 const SingleFiler = require('../models/singlefiler')
 
@@ -38,9 +39,7 @@ exports.single_get_year = (req, res, next) => {
     .then(fileYear => {
         console.log("From database", fileYear);
         if (fileYear) {
-            res.status(200).json({
-                fileYear: fileYear
-            });
+            res.status(200).json(fileYear);
         } else {
             res.status(404).json({ message: "No valid entry found for provided year"});
         }
@@ -48,7 +47,36 @@ exports.single_get_year = (req, res, next) => {
     .catch(err => {
         console.log(err);
         res.status(500).json({
-            errror: err
-        })
+            error: err
+        });
     });
+};
+
+// Http: Get
+// Returns json object containing the bracket the user i
+exports.single_get_incomeBracket = (req, res, next) => {
+    SingleFiler.findOne( { year: req.params.year } )
+    .select(" year rates _id")
+    .exec()
+    .then(fileYear => {
+        if (fileYear) {
+            let taxBracket = taxCalculator.calculateBracket(fileYear.rates, req.params.income);
+            let taxAmount = taxCalculator.calculateTax(fileYear.rates, req.params.income);
+            const taxInfo = {
+                year: fileYear.year,
+                taxBracket: taxBracket,
+                taxAmount: taxAmount,
+                rates: fileYear.rates
+            };
+            res.status(200).json(taxInfo);
+        } else {
+            res.status(404).json({ message: "No valid entry found for provided year" });
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    })
 };
