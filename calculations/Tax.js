@@ -34,7 +34,8 @@ calculateTax = (brackets, income)  => {
         if (value >= brackets[i].bottomFilter) {
             difference = value - brackets[i].bottomFilter;
             taxSum += difference * (brackets[i].taxRate / 100);
-            value -= value - difference;
+            console.log(`taxSum: ${taxSum}`);
+            value -= difference - 1;
         }
     }
     return taxSum;
