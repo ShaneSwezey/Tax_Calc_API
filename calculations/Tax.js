@@ -31,7 +31,7 @@ calculateBracket = (brackets, income)  => {
     return bracket;
 }
 
-// Returns the total amount of tax the filer must pay.
+// Returns the total amount of tax the filer must pay based on income.
 // Arguments: {
 //      brackets: json array containing tax rates, income range
 //      income: tax filers income 
