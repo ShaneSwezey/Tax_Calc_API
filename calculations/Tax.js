@@ -44,14 +44,21 @@ calculateTax = (brackets, income)  => {
         if (value >= brackets[i].bottomFilter) {
             difference = value - brackets[i].bottomFilter;
             taxSum += difference * (brackets[i].taxRate / 100);
-            console.log(`taxSum: ${taxSum}`);
             value -= difference - 1;
         }
     }
     return taxSum;
 }
 
+// Returns the percentage of tax based on income.
+// Arguments: {
+//      income: tax filers income
+//      tax: total amount of tax owed by the filer
+// }
+calculatePercentageOfIncome = (income, tax) => Math.floor(((tax / income) * 100) * 100) / 100;
+
 module.exports = {
     calculateBracket : calculateBracket,
-    calculateTax: calculateTax
+    calculateTax: calculateTax,
+    calculatePercentageOfIncome: calculatePercentageOfIncome
 };
