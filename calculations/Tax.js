@@ -40,6 +40,7 @@ calculateTax = (brackets, income)  => {
     let value = parseInt(income, 10);
     let difference;
     let taxSum = 0;
+    
     for (let i = brackets.length - 1; i >= 0; i--) {
         if (value >= brackets[i].bottomFilter) {
             difference = value - brackets[i].bottomFilter;
@@ -47,6 +48,7 @@ calculateTax = (brackets, income)  => {
             value -= difference - 1;
         }
     }
+       
     return taxSum;
 }
 
@@ -60,5 +62,5 @@ calculateTaxAsPercentageOfIncome = (income, tax) => Math.floor(((tax / income) *
 module.exports = {
     calculateBracket : calculateBracket,
     calculateTax: calculateTax,
-    calculatePercentageOfIncome: calculatePercentageOfIncome
+    calculateTaxAsPercentageOfIncome: calculateTaxAsPercentageOfIncome
 };
