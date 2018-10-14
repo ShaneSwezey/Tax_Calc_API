@@ -53,7 +53,7 @@ exports.single_get_year = (req, res, next) => {
 };
 
 // Http: Get
-// Returns json object containing the bracket the user i
+// Returns json object containing the bracket the user 
 exports.single_get_incomeBracket = (req, res, next) => {
     SingleFiler.findOne( { year: req.params.year } )
     .select("year rates _id")
