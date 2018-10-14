@@ -5,7 +5,7 @@ const Years = require('../models/years');
 // Http: Get
 // Returns all the years available for tax bracket calculations
 exports.get_all_years = (req, res, next) => {
-    Years.find()
+    Years.findOne()
     .select(" numberOfYears years _id ")
     .exec()
     .then(doc => {
