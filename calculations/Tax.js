@@ -55,7 +55,7 @@ calculateTax = (brackets, income)  => {
 //      income: tax filers income
 //      tax: total amount of tax owed by the filer
 // }
-calculatePercentageOfIncome = (income, tax) => Math.floor(((tax / income) * 100) * 100) / 100;
+calculateTaxAsPercentageOfIncome = (income, tax) => Math.floor(((tax / income) * 100) * 100) / 100;
 
 module.exports = {
     calculateBracket : calculateBracket,

@@ -62,7 +62,7 @@ exports.single_get_incomeBracket = (req, res, next) => {
         if (fileYear) {
             let taxBracket = taxCalculator.calculateBracket(fileYear.rates, req.params.income);
             let taxAmount = taxCalculator.calculateTax(fileYear.rates, req.params.income);
-            let percentOfIncome = taxCalculator.calculatePercentageOfIncome(req.params.income, taxAmount);
+            let percentOfIncome = taxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount);
             const taxInfo = {
                 year: fileYear.year,
                 taxBracket: taxBracket,
