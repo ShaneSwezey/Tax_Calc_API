@@ -1,3 +1,8 @@
+// Returns the tax bracket percentage of the tax filer based on income.
+// Arguments: {
+//      brackets: json array containing tax rates, income range
+//      income: tax filers income 
+// }
 calculateBracket = (brackets, income)  => {
     let value = parseInt(income, 10);
     let bracket;
@@ -26,6 +31,11 @@ calculateBracket = (brackets, income)  => {
     return bracket;
 }
 
+// Returns the total amount of tax the filer must pay.
+// Arguments: {
+//      brackets: json array containing tax rates, income range
+//      income: tax filers income 
+// }
 calculateTax = (brackets, income)  => {
     let value = parseInt(income, 10);
     let difference;
