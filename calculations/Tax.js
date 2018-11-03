@@ -49,7 +49,7 @@ calculateTax = (brackets, income)  => {
         }
     }
        
-    return taxSum;
+    return (Math.floor(taxSum * 100) / 100);
 }
 
 // Returns the percentage of tax based on income.
