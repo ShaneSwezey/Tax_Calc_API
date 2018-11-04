@@ -48,7 +48,7 @@ calculateAdditionalRate = (income, fileStatus) => {
         case fileStatus === MARRIEDS && income > WAGES_OVER_MARRIEDS:
             tax += (income - WAGES_OVER_MARRIEDS) * ADDITIONAL_RATE;
             break;
-        case (fileStatus !== MARRIEDJ || fileStatus !== MARRIEDS) && income > WAGES_OVER_EVERYBODYELSE:
+        case (fileStatus !== MARRIEDJ && fileStatus !== MARRIEDS) && income > WAGES_OVER_EVERYBODYELSE:
             tax += (income - WAGES_OVER_EVERYBODYELSE) * ADDITIONAL_RATE;
             break;
         default:
