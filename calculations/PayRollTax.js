@@ -57,5 +57,9 @@ calculateAdditionalRate = (income, fileStatus) => {
     return tax;
 };
 
-export { calculateSocialSecurityTax, calculateMedicareTax, calculateSelfEmployment, 
-    calculateSelfEmploymentMedicare };
+module.exports = {
+    calculateSocialSecurityTax: calculateSocialSecurityTax,
+    calculateMedicareTax: calculateMedicareTax,
+    calculateSelfEmployment: calculateSelfEmployment,
+    calculateSelfEmploymentMedicare: calculateSelfEmploymentMedicare
+};

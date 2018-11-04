@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const taxCalculator = require('../calculations/Tax');
+const PayRollCalculator = require('../calculations/PayRollTax');
 
 const SingleFiler = require('../models/singlefiler')
 
@@ -63,11 +64,15 @@ exports.single_get_incomeBracket = (req, res, next) => {
             let taxBracket = taxCalculator.calculateBracket(fileYear.rates, req.params.income);
             let taxAmount = taxCalculator.calculateTax(fileYear.rates, req.params.income);
             let percentOfIncome = taxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount);
+            let socialSecurityTax = PayRollCalculator.calculateSocialSecurityTax(req.params.income);
+            let medicareTax = PayRollCalculator.calculateMedicareTax(req.params.income, 'single');
             const taxInfo = {
                 year: fileYear.year,
                 taxBracket: taxBracket,
                 taxAmount: taxAmount,
                 percentOfIncome: percentOfIncome,
+                socialSecurityTax: socialSecurityTax,
+                medicareTax: medicareTax,
                 rates: fileYear.rates
             };
             res.status(200).json(taxInfo);
