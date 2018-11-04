@@ -56,3 +56,6 @@ calculateAdditionalRate = (income, fileStatus) => {
     }
     return tax;
 };
+
+export { calculateSocialSecurityTax, calculateMedicareTax, calculateSelfEmployment, 
+    calculateSelfEmploymentMedicare };
