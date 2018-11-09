@@ -5,7 +5,7 @@ const PayRollCalculator = require('../calculations/PayRollTax');
 const SingleFiler = require('../models/singlefiler')
 
 // Http: Get
-// Returns json object containing tax brackets for married seperate filing by every year
+// Returns json object containing tax brackets for a single filer by every year
 exports.single_get_all = (req, res, next) => {
     SingleFiler.find()
     .select("year rates _id")
