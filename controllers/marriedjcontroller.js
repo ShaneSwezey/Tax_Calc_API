@@ -34,8 +34,30 @@ exports.marriedj_get_all = (req, res, next) => {
 };
 
 // Http: Get
-// Returns json object containing tax data for married joint filing by year
+// Returns json object containing year data for married joint filing by year
 exports.marriedj_get_year = (req, res, next) => {
+    MarriedJFiler.find( {year: req.params.year} )
+    .select("year rates _id")
+    .exec()
+    .then(fileYear => {
+        console.log("From database", fileYear);
+        if (fileYear) {
+            res.status(200).json(fileYear);
+        } else {
+            res.status(404).json({ message: "No valid entry found for provided year"});
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            errror: err
+        })
+    });
+};
+
+// Http: Get
+// Returns json object containing tax data for married joint filing by year
+exports.marriedj_get_taxBreakdown = (req, res, next) => {
     MarriedJFiler.find( {year: req.params.year} )
     .select("year rates _id")
     .exec()
