@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const taxCalculator = require('../calculations/Tax');
+const TaxCalculator = require('../calculations/Tax');
 const PayRollCalculator = require('../calculations/PayRollTax');
 
 const MarriedJFiler = require('../models/marriedjointfiler');
@@ -66,9 +66,9 @@ exports.marriedj_get_taxBreakdown = (req, res, next) => {
     .then(fileYear => {
         console.log("From database", fileYear);
         if (fileYear) {
-            let taxBracket = taxCalculator.calculateBracket(fileYear.rates, req.params.income);
-            let taxAmount = taxCalculator.calculateTax(fileYear.rates, req.params.income);
-            let percentOfIncome = taxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount);
+            let taxBracket = TaxCalculator.calculateBracket(fileYear.rates, req.params.income);
+            let taxAmount = TaxCalculator.calculateTax(fileYear.rates, req.params.income);
+            let percentOfIncome = TaxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount);
             let socialSecurityTax = PayRollCalculator.calculateSocialSecurityTax(req.params.income);
             let medicareTax = PayRollCalculator.calculateMedicareTax(req.params.income, 'marriedj');
             const taxInfo = {
