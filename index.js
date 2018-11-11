@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 // Routes which should handle requests
 app.use('/single', singleRoutes);
 app.use('/Married%20filing%20jointly', marriedJRoutes);
-app.use('/marrieds', marriedSRoutes);
+app.use('/Married%20filing%20Seperately', marriedSRoutes);
 app.use('/household', houseHoldRoutes);
 app.use('/years', yearsRoutes);
 
