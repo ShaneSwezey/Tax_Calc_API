@@ -11,17 +11,13 @@ exports.single_get_all = (req, res, next) => {
     .select("year rates _id")
     .exec()
     .then(docs => {
-        const response = {
-            count: docs.length,
-            filing: docs.map(doc => {
-                return {
-                    year: doc.year,
-                    rates: doc.rates,
-                    _id: doc._id
-                };
-            })
-        };
-        res.status(200).json(response);
+        if (docs) {
+            console.log("From database", docs);
+            res.status(200).json(docs);
+        } else {
+            res.status(404).json({ message: "No valid entry found for provided year" });
+        }
+        
     })
     .catch(err => {
         console.log(err);
@@ -34,7 +30,7 @@ exports.single_get_all = (req, res, next) => {
 // Http: Get
 // Returns json object containing tax brackets for single filing by year
 exports.single_get_year = (req, res, next) => {
-    SingleFiler.find( {year: req.params.year} )
+    SingleFiler.findOne({ year: req.params.year })
     .select("year rates _id")
     .exec()
     .then(fileYear => {
@@ -42,7 +38,7 @@ exports.single_get_year = (req, res, next) => {
         if (fileYear) {
             res.status(200).json(fileYear);
         } else {
-            res.status(404).json({ message: "No valid entry found for provided year"});
+            res.status(404).json({ message: "No valid entry found for provided year" });
         }
     })
     .catch(err => {
@@ -56,7 +52,7 @@ exports.single_get_year = (req, res, next) => {
 // Http: Get
 // Returns json object containing the bracket the user 
 exports.single_get_incomeBracket = (req, res, next) => {
-    SingleFiler.findOne( { year: req.params.year } )
+    SingleFiler.findOne({ year: req.params.year })
     .select("year rates _id")
     .exec()
     .then(fileYear => {
