@@ -36,19 +36,13 @@ exports.household_get_all = (req, res, next) => {
 // Http: Get
 // Returns json object containing tax brackets for head of household seperate filing by year
 exports.household_get_year = (req, res, next) => {
-    HouseHoldFiler.find( {year: req.params.year} )
+    HouseHoldFiler.findOne( {year: req.params.year} )
     .select("year rates _id")
     .exec()
     .then(fileYear => {
         console.log("From database", fileYear);
         if (fileYear) {
-            res.status(200).json({
-                fileYear: fileYear,
-                request: {
-                    type: "GET",
-                    url: "http://localhost:3001/household"
-                }
-            });
+            res.status(200).json(fileYear);
         } else {
             res.status(404).json({ message: "No valid entry found for provided year"});
         }
