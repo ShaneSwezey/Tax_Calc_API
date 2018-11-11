@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const TaxCalculator = require('../calculations/Tax');
+const PayRollCalculator = require('../calculations/PayRollTax');
 
 const HouseHoldFiler = require('../models/headhold');
 
