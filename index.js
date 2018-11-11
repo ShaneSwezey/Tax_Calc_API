@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 app.use('/single', singleRoutes);
 app.use('/Married%20filing%20jointly', marriedJRoutes);
 app.use('/Married%20filing%20Seperately', marriedSRoutes);
-app.use('/household', houseHoldRoutes);
+app.use('/Head%20of%20household', houseHoldRoutes);
 app.use('/years', yearsRoutes);
 
 // Handles errors
