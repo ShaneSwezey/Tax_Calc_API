@@ -54,3 +54,39 @@ exports.household_get_year = (req, res, next) => {
         })
     });
 };
+
+// Http: Get
+// Returns json object containing the bracket the user 
+exports.household_get_taxBreakdown = (req, res, next) => {
+    HouseHoldFiler.findOne({ year: req.params.year })
+    .select("year rates _id")
+    .exec()
+    .then(fileYear => {
+        console.log("From database", fileYear);
+        if (fileYear) {
+            let taxBracket = TaxCalculator.calculateBracket(fileYear.rates, req.params.income);
+            let taxAmount = TaxCalculator.calculateTax(fileYear.rates, req.params.income);
+            let socialSecurityTax = PayRollCalculator.calculateSocialSecurityTax(req.params.income);
+            let medicareTax = PayRollCalculator.calculateMedicareTax(req.params.income, 'household');
+            let percentOfIncome = TaxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount + socialSecurityTax + medicareTax);
+            const taxInfo = {
+                year: fileYear.year,
+                taxBracket: taxBracket,
+                taxAmount: taxAmount,
+                percentOfIncome: percentOfIncome,
+                socialSecurityTax: socialSecurityTax,
+                medicareTax: medicareTax,
+                rates: fileYear.rates
+            };
+            res.status(200).json(taxInfo);
+        } else {
+            res.status(404).json({ message: "No valid entry found for provided year" });
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        });
+    })
+};
