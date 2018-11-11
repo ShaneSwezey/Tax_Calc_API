@@ -38,7 +38,7 @@ exports.marriedj_get_all = (req, res, next) => {
 // Http: Get
 // Returns json object containing year data for married joint filing by year
 exports.marriedj_get_year = (req, res, next) => {
-    MarriedJFiler.find( {year: req.params.year} )
+    MarriedJFiler.findOne( {year: req.params.year} )
     .select("year rates _id")
     .exec()
     .then(fileYear => {

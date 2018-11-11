@@ -9,21 +9,11 @@ exports.marrieds_get_all = (req, res, next) => {
     .select("year rates _id")
     .exec()
     .then(docs => {
-        const response = {
-            count: docs.length,
-            filing: docs.map(doc => {
-                return {
-                    year: doc.year,
-                    rates: doc.rates,
-                    _id: doc._id,
-                    request: {
-                        type: "GET",
-                        url: "http://localhost:3000/marrieds/" + doc._id
-                    }
-                };
-            })
-        };
-        res.status(200).json(response);
+        if (docs) {
+            res.status(200).json(docs);
+        } else {
+            res.status(404).json({ message: "No valid entry found for provided year"})
+        }
     })
     .catch(err => {
         console.log(err);
@@ -36,7 +26,7 @@ exports.marrieds_get_all = (req, res, next) => {
 // Http: Get
 // Returns json object containing tax brackets for married seperate filing by year
 exports.marrieds_get_year = (req, res, next) => {
-    MarriedSFiler.find( {year: req.params.year} )
+    MarriedSFiler.findOne( {year: req.params.year} )
     .select("year rates _id")
     .exec()
     .then(fileYear => {
