@@ -5,6 +5,7 @@
 // }
 calculateBracket = (brackets, income)  => {
     let value = parseInt(income, 10);
+    console.log(brackets);
     let bracket;
     switch(true) {
         case value >= brackets[6].bottomFilter:

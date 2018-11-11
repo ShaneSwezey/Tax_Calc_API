@@ -60,7 +60,7 @@ exports.marriedj_get_year = (req, res, next) => {
 // Http: Get
 // Returns json object containing tax data for married joint filing by year
 exports.marriedj_get_taxBreakdown = (req, res, next) => {
-    MarriedJFiler.find( {year: req.params.year} )
+    SingleFiler.findOne( { year: req.params.year } )
     .select("year rates _id")
     .exec()
     .then(fileYear => {
@@ -68,9 +68,9 @@ exports.marriedj_get_taxBreakdown = (req, res, next) => {
         if (fileYear) {
             let taxBracket = TaxCalculator.calculateBracket(fileYear.rates, req.params.income);
             let taxAmount = TaxCalculator.calculateTax(fileYear.rates, req.params.income);
-            let percentOfIncome = TaxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount);
             let socialSecurityTax = PayRollCalculator.calculateSocialSecurityTax(req.params.income);
             let medicareTax = PayRollCalculator.calculateMedicareTax(req.params.income, 'marriedj');
+            let percentOfIncome = TaxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount + socialSecurityTax + medicareTax);
             const taxInfo = {
                 year: fileYear.year,
                 taxBracket: taxBracket,
@@ -82,13 +82,13 @@ exports.marriedj_get_taxBreakdown = (req, res, next) => {
             };
             res.status(200).json(taxInfo);
         } else {
-            res.status(404).json({ message: "No valid entry found for provided year"});
+            res.status(404).json({ message: "No valid entry found for provided year" });
         }
     })
     .catch(err => {
         console.log(err);
         res.status(500).json({
-            errror: err
-        })
-    });
+            error: err
+        });
+    })
 };

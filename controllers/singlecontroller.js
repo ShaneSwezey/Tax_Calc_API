@@ -60,12 +60,13 @@ exports.single_get_incomeBracket = (req, res, next) => {
     .select("year rates _id")
     .exec()
     .then(fileYear => {
+        console.log("From database", fileYear);
         if (fileYear) {
             let taxBracket = TaxCalculator.calculateBracket(fileYear.rates, req.params.income);
             let taxAmount = TaxCalculator.calculateTax(fileYear.rates, req.params.income);
-            let percentOfIncome = TaxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount);
             let socialSecurityTax = PayRollCalculator.calculateSocialSecurityTax(req.params.income);
             let medicareTax = PayRollCalculator.calculateMedicareTax(req.params.income, 'single');
+            let percentOfIncome = TaxCalculator.calculateTaxAsPercentageOfIncome(req.params.income, taxAmount + socialSecurityTax + medicareTax);
             const taxInfo = {
                 year: fileYear.year,
                 taxBracket: taxBracket,
